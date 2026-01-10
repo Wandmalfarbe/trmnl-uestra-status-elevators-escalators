@@ -39,7 +39,7 @@ jobs:
         run: npm ci
 
       - name: Run scraping script
-        run: node scrape.js
+        run: npm run start
 
       - name: Prepare Pages artifact
         run: |
