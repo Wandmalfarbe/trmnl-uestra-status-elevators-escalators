@@ -43,11 +43,6 @@ jobs:
       - name: Run scraping script
         run: npm run start
 
-      - name: Prepare Pages artifact
-        run: |
-          mkdir -p public
-          cp result.json public/
-
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
