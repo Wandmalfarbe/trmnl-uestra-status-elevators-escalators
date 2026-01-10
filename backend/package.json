@@ -1,0 +1,19 @@
+{
+  "name": "uestra",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node scrape.js",
+    "update_trmnlp": "node scrape.js --update-trmnlp",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "jsdom": "^27.4.0"
+  }
+}
