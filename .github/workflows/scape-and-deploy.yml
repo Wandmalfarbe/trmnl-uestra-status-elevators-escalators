@@ -6,6 +6,8 @@ on:
     - cron: "0 7 * * *"
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 permissions:
   contents: read
@@ -39,21 +41,17 @@ jobs:
         run: npm ci
 
       - name: Run scraping script
-        run: node scrape.js
-
-      - name: Prepare Pages artifact
-        run: |
-          mkdir -p public
-          cp result.json public/
+        run: npm run start
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: backend/public
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
