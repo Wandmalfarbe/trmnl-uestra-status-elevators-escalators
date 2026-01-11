@@ -1,0 +1,15 @@
+# TRMNLP configuration
+# {{ env.VARIABLE }} interpolation is available here
+---
+# auto-reload when files change (`watch: false` to disable)
+watch:
+  - .trmnlp.yml
+  - src
+
+time_zone: Europe/Berlin
+
+# override variables
+variables:
+  trmnl:
+    plugin_settings:
+      instance_name: "ÜSTRA Status: Aufzüge & Rolltreppen"
