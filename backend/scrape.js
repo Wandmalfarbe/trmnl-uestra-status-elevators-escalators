@@ -55,21 +55,25 @@ async function run() {
         });
     });
 
-    const output = {
+    const outputUnwrapped = {
         source: url,
         scrapeTime: new Date().toISOString(),
         lastUpdateTime: lastUpdateTime.toISOString(),
         circulationElements: circulationElements
     }
+    const outputWrapped = {
+        data: {...outputUnwrapped}
+    }
 
     fs.mkdirSync(outputDir, {recursive: true});
-    fs.writeFileSync(outputFile, JSON.stringify(output, null, 2), "utf-8");
+    fs.writeFileSync(outputFile, JSON.stringify(outputWrapped, null, 2), "utf-8");
 
+    // Update trmnlp variables via variables override (without a deployment)
     if (updateTrmnlp) {
-        const minifiedJson = JSON.stringify(output);
+        const minifiedJson = JSON.stringify(outputUnwrapped);
         if (fs.existsSync(trmnlpYamlFile)) {
             let yamlContent = fs.readFileSync(trmnlpYamlFile, "utf-8");
-            yamlContent = yamlContent.replace(/(  json: ).*/s, "$1" + minifiedJson);
+            yamlContent = yamlContent.replace(/^(  data: ).*$/s, "$1" + minifiedJson);
             fs.writeFileSync(trmnlpYamlFile, yamlContent, "utf-8");
             console.log(`Updated ${trmnlpYamlFile} with minified JSON.`);
         } else {
