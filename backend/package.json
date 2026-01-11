@@ -1,14 +1,14 @@
 {
   "name": "trmnl-uestra-status-elevators-escalators",
   "version": "1.0.0",
-  "description": "",
-  "license": "ISC",
+  "description": "Scrape the status of elevators and escalators from the public transport operator ÜSTRA in Hannover.",
+  "license": "BSD-3-Clause",
   "author": "",
   "type": "module",
-  "main": "index.js",
+  "private": true,
+  "main": "scrape.js",
   "scripts": {
     "start": "node scrape.js",
-    "update_trmnlp": "node scrape.js --update-trmnlp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

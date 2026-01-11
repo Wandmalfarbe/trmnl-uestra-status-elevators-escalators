@@ -3,12 +3,9 @@ import fs from "node:fs";
 import path from "node:path";
 import {fromZonedTime} from "date-fns-tz";
 
-const updateTrmnlp = process.argv.includes("--update-trmnlp");
-
 const url = "https://aufzuege.uestra.de/ApplianceStatus?mode=3";
 const outputDir = "public";
 const outputFile = path.join(outputDir, "result.json");
-const trmnlpYamlFile = path.join("../.trmnlp.yml");
 
 async function run() {
     const res = await fetch(url);
@@ -67,19 +64,6 @@ async function run() {
 
     fs.mkdirSync(outputDir, {recursive: true});
     fs.writeFileSync(outputFile, JSON.stringify(outputWrapped, null, 2), "utf-8");
-
-    // Update trmnlp variables via variables override (without a deployment)
-    if (updateTrmnlp) {
-        const minifiedJson = JSON.stringify(outputUnwrapped);
-        if (fs.existsSync(trmnlpYamlFile)) {
-            let yamlContent = fs.readFileSync(trmnlpYamlFile, "utf-8");
-            yamlContent = yamlContent.replace(/^(  data: ).*$/s, "$1" + minifiedJson);
-            fs.writeFileSync(trmnlpYamlFile, yamlContent, "utf-8");
-            console.log(`Updated ${trmnlpYamlFile} with minified JSON.`);
-        } else {
-            console.warn(`${trmnlpYamlFile} does not exist, skipping update.`);
-        }
-    }
 }
 
 function getLastUpdateTime(document) {
